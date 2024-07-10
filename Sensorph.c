@@ -1,84 +1,30 @@
+//Medidor de pH
+//Medidor de ph utilizando o Sensor de pH 4502c, placa Arduino e o Display LCD 16x2.
+
+//Carrega a biblioteca LiquidCrystal 
+//Carrega a biblioteca Wire
 #include <Wire.h>
-#include <LiquidCrystal.h> // Adiciona a biblioteca "LiquidCrystal" ao projeto
+#include <LiquidCrystal.h>
 
-LiquidCrystal lcd(12, 13, 7, 6, 5, 4); // Pinagem do LCD
+//Define os pinos que serão utilizados para ligação ao display
+LiquidCrystal lcd(12, 11, 5, 4, 3, 2); 
 
-float valor_calibracao = 21.34 + 5.31;   // Fator de calibração
-
-int contagem = 0;           // Variável de contagem
-float soma_tensao = 0;      // Variável para soma de tensão
-float media = 0;            // Variável que calcula a media
-float entrada_A0;           // Variável de leitura do pino A0
-float tensao;               // Variável para conversão em tensão
-unsigned long tempo;        // Float tempo
+const int pHSensorPin = A0; // Pino analógico onde o sensor de pH está conectado
 
 void setup() {
-  lcd.begin(16, 2);             // Inicializa todos os caracteres
-  inicio ();
-  Serial.begin(9600);
+  lcd.begin(16, 2); // Inicia o LCD
+  lcd.print("Medidor de pH"); // Mensagem inicial no LCD
   delay(2000);
+  lcd.clear();
 }
 
 void loop() {
-  soma_tensao = 0;   // Inicia soma_tensão em 0
-  contagem = 0;      // Inicia a contagem em 0
+  int sensorValue = analogRead(pHSensorPin); // Lê o valor analógico do sensor de pH
+  float voltage = sensorValue * (5.0 / 1023.0); // Converte o valor para tensão
+  float pHValue = 3.5 * voltage; // Fórmula para converter a tensão em pH (ajuste conforme necessário)
 
-  while (contagem < 10) {                   // Executa enquanto contagem menor que 10
-    tempo = millis();                       // Define o tempo em microssegundos
-    entrada_A0 = analogRead(A0);            // Lê a entrada analógica
-    tensao = (entrada_A0 * 5.0) / 1024.0;   // Converte em tensão, o valor lido
-    soma_tensao = (soma_tensao + tensao);   // Soma a tensão anterior com a atual
-    contagem++;                             // Soma 1 à variável de contagem
-    delay(100);                             // Aguarda para próxima leitura
-  }
-
-  media = soma_tensao / 10;                 // Calcula a média das leituras
-
-  float valor_pH = -5.70 * media + valor_calibracao;    // Calcula valor de pH
-
-  lcd.clear();              // Limpa o display
-  lcd.setCursor(2, 0);      // 2 = 2 colunas para a direita. 0 = Primeira linha
-  lcd.print("Valor do pH:"); // Imprime um texto
-
-  if (valor_pH < 10)
-    lcd.setCursor(6, 1);
-  else
-    lcd.setCursor(5, 1);      // 2 = 2 colunas para a direita. 0 = Primeira linha
-  lcd.print(valor_pH); // Imprime um texto
-  Serial.println(valor_pH);
-
-  delay(1000);                    // Aguarda para próxima leitura
-}
-
-void inicio ()                // teste de rolagem de mensagem
-{
-  lcd.setCursor(0, 0);           // selecionando coluna 16 e linha 1
-  lcd.print("M"); 
-  delay (200);
-  lcd.print("e"); 
-  delay (200);
-  lcd.print("d"); 
-  delay (200);
-  lcd.print("i"); 
-  delay (200);
-  lcd.print("d"); 
-  delay (200);
-  lcd.print("o"); 
-  delay (200);
-  lcd.print("r"); 
-  delay (200);
-  lcd.print(" "); 
-  delay (200);
-  lcd.print("d"); 
-  delay (200);
-  lcd.print("e"); 
-  delay (200);
-  lcd.print(" "); 
-  delay (200);
-  lcd.print("p"); 
-  delay (200);
-  lcd.print("H"); 
-  delay (200);
-  lcd.print(":"); 
-  delay (200);
+  lcd.setCursor(3, 0); // Define o cursor na primeira linha
+  lcd.print("pH: ");
+  lcd.print(pHValue); // Exibe o valor de pH no LCD
+  delay(1000); // Espera 1 segundo antes de atualizar
 }
