@@ -9,9 +9,8 @@
 * 4 - Indústria Farmacêutica: Para controlar o pH durante a fabricação de medicamentos e produtos cosméticos.
 * 5 - Laboratórios de Pesquisa: Para estudos químicos e biológicos onde o pH precisa ser controlado com precisão.
 * 6 - Agricultura: Para testar o pH do solo e ajustar a fertilidade do solo, garantindo um ambiente adequado para o crescimento das plantas.
-### O sensor de pH é essencial para processos que exigem controle rigoroso do ambiente químico, garantindo a eficiência e segurança das operações.
+#### O sensor de pH é essencial para processos que exigem controle rigoroso do ambiente químico, garantindo a eficiência e segurança das operações.
 
-# 
 ## Lista de Materiais
 
 * 01 - Placa Arduino;
@@ -25,6 +24,5 @@
 * 01 - Software Arduino IDE;
 * 01 - Potenciômetro;
 
-#
 ## Obs.: O potenciômetro será para dar brilho na escrita. 
-* Como ligar: O Pino "VO" do display LCD 16x2, no lugar de colocar negativo da protoboard, colocar no pino do centro do potenciômetro. O Positivo do Potenciômetro no positivo da protoboard e o negativo do potenciômetro no negativo da protoboard. E só fazer o controle do brilho da escrita.
+* Como ligar o potenciômetro: O Pino "VO" do Display LCD 16x2, no lugar de colocar negativo da protoboard, colocar no pino do centro do potenciômetro. O Positivo do Potenciômetro no positivo da protoboard e o negativo do potenciômetro no negativo da protoboard. E só fazer o controle do brilho da escrita.
