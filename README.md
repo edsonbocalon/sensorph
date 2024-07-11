@@ -23,3 +23,8 @@
 * 03 - Jumpers macho-fêmea;
 * 01 - Notebook;
 * 01 - Software Arduino IDE;
+* 01 - Potenciômetro;
+
+#
+## Obs.: O potenciômetro será para dar brilho na escrita. 
+* Como ligar: VO do display LCD 16x2, no lugar de colocar negativo da protoboard, colocar no pino do centro do potenciômetro. O Positivo do Potenciômetro no positivo da protoboard e o negativo do potenciômetro no negativo da protoboard. E só fazer o controle do brilho da escrita.
