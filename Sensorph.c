@@ -6,25 +6,39 @@
 #include <Wire.h>
 #include <LiquidCrystal.h>
 
-//Define os pinos que serão utilizados para ligação ao display
+// Pinos do LCD: RS, E, D4, D5, D6, D7
 LiquidCrystal lcd(12, 11, 5, 4, 3, 2); 
 
-const int pHSensorPin = A0; // Pino analógico onde o sensor de pH está conectado
+// Pino do sensor de pH
+const int pHSensorPin = A0;
+
+// Variáveis de calibração
+float offset = 0.0;      // Offset para calibrar o pH
+float slope = 3.5;       // Fator de escala padrão (ajustável)
 
 void setup() {
-  lcd.begin(16, 2); // Inicia o LCD
-  lcd.print("Medidor de pH"); // Mensagem inicial no LCD
+  lcd.begin(16, 2);
+  lcd.print("Medidor de pH");
   delay(2000);
   lcd.clear();
 }
 
 void loop() {
-  int sensorValue = analogRead(pHSensorPin); // Lê o valor analógico do sensor de pH
-  float voltage = sensorValue * (5.0 / 1023.0); // Converte o valor para tensão
-  float pHValue = 3.5 * voltage; // Fórmula para converter a tensão em pH (ajuste conforme necessário)
+  int rawValue = analogRead(pHSensorPin);
+  float voltage = rawValue * (5.0 / 1023.0);
 
-  lcd.setCursor(3, 0); // Define o cursor na primeira linha
+  // Conversão da tensão em pH com possibilidade de ajuste
+  float pHValue = slope * voltage + offset;
+
+  // Exibe no LCD
+  lcd.clear();
+  lcd.setCursor(0, 0);
+  lcd.print("Tensao: ");
+  lcd.print(voltage, 2); // Mostra tensão com 2 casas decimais
+
+  lcd.setCursor(0, 1);
   lcd.print("pH: ");
-  lcd.print(pHValue); // Exibe o valor de pH no LCD
-  delay(1000); // Espera 1 segundo antes de atualizar
+  lcd.print(pHValue, 2); // Mostra pH com 2 casas decimais
+
+  delay(1000);
 }
